@@ -5,7 +5,7 @@ from einops import rearrange
 from numpy import prod
 from torch import Tensor, einsum
 from torch.nn import ConvTranspose1d, ConvTranspose2d, ConvTranspose3d, Module
-from torch.nn.grad import _grad_input_padding
+from backpack.utils.conv import grad_input_padding
 
 from backpack.core.derivatives.basederivatives import BaseParameterDerivatives
 from backpack.utils.conv import get_conv_function
@@ -122,7 +122,7 @@ class ConvTransposeNDDerivatives(BaseParameterDerivatives):
         input_size = list(module.stored_backpack_output_9d617192.size())
         input_size[0] = mat.size(0)
 
-        grad_padding = _grad_input_padding(
+        grad_padding = grad_input_padding(
             grad_output=mat,
             input_size=input_size,
             stride=module.stride,
