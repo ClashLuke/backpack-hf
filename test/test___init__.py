@@ -24,11 +24,11 @@ def test_no_io():
     with disable():
         module(input)
         assert not hasattr(module, "input0")
-        assert not hasattr(module, "output")
+        assert not hasattr(module, "stored_backpack_output_9d617192")
 
     module(input)
     assert hasattr(module, "input0")
-    assert hasattr(module, "output")
+    assert hasattr(module, "stored_backpack_output_9d617192")
 
 
 def test_no_io_should_store_io():

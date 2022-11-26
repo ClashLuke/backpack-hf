@@ -182,8 +182,8 @@ def memory_cleanup(module: Module) -> None:
     Args:
         module: current module
     """
-    if hasattr(module, "output"):
-        delattr(module, "output")
+    if hasattr(module, "stored_backpack_output_9d617192"):
+        delattr(module, "stored_backpack_output_9d617192")
     i = 0
     while hasattr(module, "input{}".format(i)):
         delattr(module, "input{}".format(i))

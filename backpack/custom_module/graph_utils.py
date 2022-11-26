@@ -82,7 +82,7 @@ def _check_backpack_compatible(module: Module, debug: bool) -> None:
         print("\tChecking BackPACK compatibility.")
     graph: Graph = BackpackTracer().trace(module)
     for node in graph.nodes:
-        if node.op not in ["call_module", "placeholder", "output"]:
+        if node.op not in ["call_module", "placeholder", "stored_backpack_output_9d617192"]:
             warn(
                 f"Encountered node that may break second-order extensions: op={node.op}"
                 f", target={node.target}. If you encounter this problem, please open an"

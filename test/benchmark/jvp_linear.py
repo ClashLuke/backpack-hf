@@ -17,7 +17,7 @@ def data_linear(device="cpu"):
     return {
         "X": X,
         "module": linear,
-        "output": out,
+        "stored_backpack_output_9d617192": out,
         "vout_ag": vout,
         "vout_bp": vout.unsqueeze(2),
         "vin_ag": vin,

@@ -178,14 +178,14 @@ def bp_jtv_bias_func(module, vin):
 @pytest.mark.parametrize("data", PROBLEM_DATA, ids=PROBLEM_NAME)
 def test_jtv_ag_vs_bp(data):
     print(data["vin_bp"].shape)
-    A = ag_jtv_func(data["X"], data["output"], data["vin_ag"])()
+    A = ag_jtv_func(data["X"], data["stored_backpack_output_9d617192"], data["vin_ag"])()
     B = bp_jtv_func(data["module"], data["vin_bp"])()
     assert allclose(A, B.view_as(A), atol=ATOL, rtol=RTOL)
 
 
 @pytest.mark.parametrize("data", PROBLEM_DATA, ids=PROBLEM_NAME)
 def test_jv_ag_vs_bp(data):
-    A = ag_jv_func(data["X"], data["output"], data["vout_ag"])()
+    A = ag_jv_func(data["X"], data["stored_backpack_output_9d617192"], data["vout_ag"])()
     B = bp_jv_func(data["module"], data["vout_bp"])()
     assert allclose(A, B.view_as(A), atol=ATOL, rtol=RTOL)
 
@@ -193,7 +193,7 @@ def test_jv_ag_vs_bp(data):
 @pytest.mark.parametrize("data", PROBLEM_DATA, ids=PROBLEM_NAME)
 def test_jtv_weight_ag_vs_bp(data):
     skip_if_attribute_does_not_exists(data["module"], "weight")
-    A = ag_jtv_weight_func(data["module"], data["output"], data["vin_ag"])()
+    A = ag_jtv_weight_func(data["module"], data["stored_backpack_output_9d617192"], data["vin_ag"])()
     B = bp_jtv_weight_func(data["module"], data["vin_bp"])()
     assert allclose(A, B.view_as(A), atol=ATOL, rtol=RTOL)
 
@@ -201,7 +201,7 @@ def test_jtv_weight_ag_vs_bp(data):
 @pytest.mark.parametrize("data", PROBLEM_DATA, ids=PROBLEM_NAME)
 def test_jtv_bias_ag_vs_bp(data):
     skip_if_attribute_does_not_exists(data["module"], "bias")
-    A = ag_jtv_bias_func(data["module"], data["output"], data["vin_ag"])()
+    A = ag_jtv_bias_func(data["module"], data["stored_backpack_output_9d617192"], data["vin_ag"])()
     B = bp_jtv_bias_func(data["module"], data["vin_bp"])()
     assert allclose(A, B.view_as(A), atol=ATOL, rtol=RTOL)
 
@@ -213,12 +213,12 @@ def test_jtv_bias_ag_vs_bp(data):
 
 @pytest.mark.parametrize("data", PROBLEM_DATA, ids=PROBLEM_NAME)
 def test_jtv_input_ag(data, benchmark):
-    benchmark(ag_jtv_func(data["X"], data["output"], data["vin_ag"]))
+    benchmark(ag_jtv_func(data["X"], data["stored_backpack_output_9d617192"], data["vin_ag"]))
 
 
 @pytest.mark.parametrize("data", PROBLEM_DATA, ids=PROBLEM_NAME)
 def test_jv_input_ag(data, benchmark):
-    benchmark(ag_jv_func(data["X"], data["output"], data["vout_ag"]))
+    benchmark(ag_jv_func(data["X"], data["stored_backpack_output_9d617192"], data["vout_ag"]))
 
 
 @pytest.mark.parametrize("data", PROBLEM_DATA, ids=PROBLEM_NAME)
@@ -234,7 +234,7 @@ def test_jv_input_bp(data, benchmark):
 @pytest.mark.parametrize("data", PROBLEM_DATA, ids=PROBLEM_NAME)
 def test_jtv_weight_ag(data, benchmark):
     skip_if_attribute_does_not_exists(data["module"], "weight")
-    benchmark(ag_jtv_weight_func(data["module"], data["output"], data["vin_ag"]))
+    benchmark(ag_jtv_weight_func(data["module"], data["stored_backpack_output_9d617192"], data["vin_ag"]))
 
 
 @pytest.mark.parametrize("data", PROBLEM_DATA, ids=PROBLEM_NAME)
@@ -246,7 +246,7 @@ def test_jtv_weight_bp(data, benchmark):
 @pytest.mark.parametrize("data", PROBLEM_DATA, ids=PROBLEM_NAME)
 def test_jtv_bias_ag(data, benchmark):
     skip_if_attribute_does_not_exists(data["module"], "bias")
-    benchmark(ag_jtv_bias_func(data["module"], data["output"], data["vin_ag"]))
+    benchmark(ag_jtv_bias_func(data["module"], data["stored_backpack_output_9d617192"], data["vin_ag"]))
 
 
 @pytest.mark.parametrize("data", PROBLEM_DATA, ids=PROBLEM_NAME)

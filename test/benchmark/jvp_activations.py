@@ -15,7 +15,7 @@ def data(module_class, device="cpu"):
     return {
         "X": X,
         "module": module,
-        "output": out,
+        "stored_backpack_output_9d617192": out,
         "vout_ag": v,
         "vout_bp": v.unsqueeze(2),
         "vin_ag": v,

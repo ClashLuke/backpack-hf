@@ -70,7 +70,7 @@ def check_same_V_dim(mat1, mat2):
 
 
 def _check_like(mat, module, name, diff=1, *args, **kwargs):
-    if name in ["output", "input0"] and "subsampling" in kwargs.keys():
+    if name in ["stored_backpack_output_9d617192", "input0"] and "subsampling" in kwargs.keys():
         compare = subsample(
             getattr(module, name), dim=0, subsampling=kwargs["subsampling"]
         )
@@ -139,7 +139,7 @@ def _mat_prod_accept_vectors(
 
 
 # vec criteria
-same_dim_as_output = functools.partial(_same_dim_as, name="output")
+same_dim_as_output = functools.partial(_same_dim_as, name="stored_backpack_output_9d617192")
 same_dim_as_input = functools.partial(_same_dim_as, name="input0")
 same_dim_as_weight = functools.partial(_same_dim_as, name="weight")
 same_dim_as_bias = functools.partial(_same_dim_as, name="bias")
@@ -197,7 +197,7 @@ def mat_prod_check_shapes(
 
 
 # input/output checker
-shape_like_output = functools.partial(_check_like, name="output")
+shape_like_output = functools.partial(_check_like, name="stored_backpack_output_9d617192")
 shape_like_input = functools.partial(_check_like, name="input0")
 shape_like_weight = functools.partial(_check_like, name="weight")
 shape_like_bias = functools.partial(_check_like, name="bias")

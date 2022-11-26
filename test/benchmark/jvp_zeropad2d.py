@@ -20,7 +20,7 @@ def data(device="cpu"):
     return {
         "X": X,
         "module": module,
-        "output": out,
+        "stored_backpack_output_9d617192": out,
         "vout_ag": vout,
         "vout_bp": vout.view(N, -1, 1),
         "vin_ag": vin,

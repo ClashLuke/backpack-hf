@@ -62,7 +62,7 @@ def _check_no_io(module: Module) -> None:
     for child_module in module.children():
         _check_no_io(child_module)
 
-    io_strs = ["input0", "output"]
+    io_strs = ["input0", "stored_backpack_output_9d617192"]
     if any(hasattr(module, io) for io in io_strs):
         raise AssertionError(f"IO should be clear, but {module} has one of {io_strs}.")
 
