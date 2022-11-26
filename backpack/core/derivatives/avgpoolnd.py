@@ -45,9 +45,9 @@ class AvgPoolNDDerivatives(BaseDerivatives):
         self.check_parameters(module)
 
         C = module.input0.shape[1]
-        shape_out = (1,) + tuple(module.output.shape[2:])
+        shape_out = (1,) + tuple(module.stored_backpack_output_9d617192.shape[2:])
         in_features = module.input0.shape[1:].numel()
-        out_features = module.output.shape[1:].numel()
+        out_features = module.stored_backpack_output_9d617192.shape[1:].numel()
 
         mat = mat.reshape(out_features * C, *shape_out)
         jac_t_mat = self.__apply_jacobian_t_of(module, mat).reshape(
@@ -95,9 +95,9 @@ class AvgPoolNDDerivatives(BaseDerivatives):
 
     def __check_jmp_out_as_pool(self, mat, jmp_as_pool, module):
         V = mat.shape[0]
-        N, C_out = module.output.shape[:2]
+        N, C_out = module.stored_backpack_output_9d617192.shape[:2]
 
-        assert jmp_as_pool.shape == (V * N * C_out, 1) + module.output.shape[2:]
+        assert jmp_as_pool.shape == (V * N * C_out, 1) + module.stored_backpack_output_9d617192.shape[2:]
 
     def _jac_t_mat_prod(
         self,

@@ -53,7 +53,7 @@ class MaxPoolNDDerivatives(BaseDerivatives):
 
         N, C = module.input0.shape[:2]
         in_pixels = module.input0.shape[2:].numel()
-        out_pixels = module.output.shape[2:].numel()
+        out_pixels = module.stored_backpack_output_9d617192.shape[2:].numel()
         in_features = C * in_pixels
 
         pool_idx = self.get_pooling_idx(module).view(N, C, out_pixels)
@@ -138,10 +138,10 @@ class MaxPoolNDDerivatives(BaseDerivatives):
         V: int,
         subsampling: List[int] = None,
     ) -> Tensor:
-        N, C_out = module.output.shape[:2]
+        N, C_out = module.stored_backpack_output_9d617192.shape[:2]
         in_pixels = module.input0.shape[2:].numel()
         N = N if subsampling is None else len(subsampling)
 
         shape = (V, N, C_out, in_pixels)
 
-        return zeros(shape, device=module.output.device, dtype=module.output.dtype)
+        return zeros(shape, device=module.stored_backpack_output_9d617192.device, dtype=module.stored_backpack_output_9d617192.dtype)

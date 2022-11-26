@@ -96,7 +96,7 @@ class ScaleModuleBatchGrad(FirstOrderModuleExtension):
         if show_useful:
             print("Useful quantities:")
             # output is saved under field output
-            print("\tmodule.output.shape:", module.output.shape)
+            print("\tmodule.stored_backpack_output_9d617192.shape:", module.stored_backpack_output_9d617192.shape)
             # input i is saved under field input[i]
             print("\tmodule.input0.shape:", module.input0.shape)
             # gradient w.r.t output

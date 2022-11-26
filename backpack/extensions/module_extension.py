@@ -96,7 +96,7 @@ class ModuleExtension:
         self.check_hyperparameters_module_extension(extension, module, g_inp, g_out)
         delete_old_quantities = not self.__should_retain_backproped_quantities(module)
         bp_quantity = self.__get_backproped_quantity(
-            extension, module.output, delete_old_quantities
+            extension, module.stored_backpack_output_9d617192, delete_old_quantities
         )
         if (
             extension.expects_backpropagation_quantities()
@@ -159,9 +159,9 @@ class ModuleExtension:
         Returns:
             whether backpropagation quantities should be kept
         """
-        is_a_leaf = module.output.grad_fn is None
-        retain_grad_is_on = getattr(module.output, "retains_grad", False)
-        # inp_is_out = id(module.input0) == id(module.output)
+        is_a_leaf = module.stored_backpack_output_9d617192.grad_fn is None
+        retain_grad_is_on = getattr(module.stored_backpack_output_9d617192, "retains_grad", False)
+        # inp_is_out = id(module.input0) == id(module.stored_backpack_output_9d617192)
         should_retain_grad = is_a_leaf or retain_grad_is_on  # or inp_is_out
         return should_retain_grad
 

@@ -11,7 +11,7 @@ def extract_weight_diagonal(
     Args:
         module: Linear layer for which the diagonal is extracted w.r.t. the weight.
         S: Backpropagated symmetric factorization of the loss Hessian. Has shape
-            ``(V, *module.output.shape)``.
+            ``(V, *module.stored_backpack_output_9d617192.shape)``.
         sum_batch: Sum out the weight diagonal's batch dimension. Default: ``True``.
 
     Returns:
@@ -42,7 +42,7 @@ def extract_bias_diagonal(module: Linear, S: Tensor, sum_batch: bool = True) -> 
     Args:
         module: Linear layer for which the diagonal is extracted w.r.t. the bias.
         S: Backpropagated symmetric factorization of the loss Hessian. Has shape
-            ``(V, *module.output.shape)``.
+            ``(V, *module.stored_backpack_output_9d617192.shape)``.
         sum_batch: Sum out the bias diagonal's batch dimension. Default: ``True``.
 
     Returns:

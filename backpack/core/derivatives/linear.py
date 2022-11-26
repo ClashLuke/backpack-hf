@@ -87,7 +87,7 @@ class LinearDerivatives(BaseParameterDerivatives):
             g_inp: Gradients w.r.t. module input. Not required by the implementation.
             g_out: Gradients w.r.t. module output. Not required by the implementation.
             mat: Matrix of shape
-                ``[module.output.numel() // N, module.output.numel() // N]``.
+                ``[module.stored_backpack_output_9d617192.numel() // N, module.stored_backpack_output_9d617192.numel() // N]``.
 
         Returns:
             Matrix of shape
@@ -116,7 +116,7 @@ class LinearDerivatives(BaseParameterDerivatives):
 
         Returns:
             Batched Jacobian vector products. Has shape
-            ``[V, N, *module.output.shape]``.
+            ``[V, N, *module.stored_backpack_output_9d617192.shape]``.
         """
         return einsum("n...i,voi->vn...o", module.input0, mat)
 
@@ -169,7 +169,7 @@ class LinearDerivatives(BaseParameterDerivatives):
 
         Returns:
             Batched Jacobian vector products. Has shape
-            ``[V, N, *module.output.shape]``.
+            ``[V, N, *module.stored_backpack_output_9d617192.shape]``.
         """
         N = module.input0.shape[0]
         additional_dims = list(self._get_additional_dims(module))

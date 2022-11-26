@@ -62,7 +62,7 @@ def extract_weight_diagonal(module, unfolded_input, S, sum_batch=True):
             extracted w.r.t. the weight.
         unfolded_input (torch.Tensor): Unfolded input to the transpose convolution.
         S (torch.Tensor): Backpropagated (symmetric factorization) of the loss Hessian.
-            Has shape ``(V, *module.output.shape)``.
+            Has shape ``(V, *module.stored_backpack_output_9d617192.shape)``.
         sum_batch (bool, optional): Sum out the batch dimension of the weight diagonals.
             Default value: ``True``.
 
@@ -102,7 +102,7 @@ def extract_bias_diagonal(module, S, sum_batch=True):
             extracted w.r.t. the bias.
         unfolded_input (torch.Tensor): Unfolded input to the transpose convolution.
         S (torch.Tensor): Backpropagated (symmetric factorization) of the loss Hessian.
-            Has shape ``(V, *module.output.shape)``.
+            Has shape ``(V, *module.stored_backpack_output_9d617192.shape)``.
         sum_batch (bool, optional): Sum out the batch dimension of the bias diagonals.
             Default value: ``True``.
 
@@ -126,7 +126,7 @@ def unfold_by_conv_transpose(input, module):
     Returns:
         torch.Tensor: Unfolded input of shape ``(N, C, K * X)`` with
             ``K = module.weight.shape[2:].numel()`` the number of kernel elements
-            and ``X = module.output.shape[2:].numel()`` the number of output pixels.
+            and ``X = module.stored_backpack_output_9d617192.shape[2:].numel()`` the number of output pixels.
     """
     N, C_in = input.shape[0], input.shape[1]
     kernel_size = module.kernel_size

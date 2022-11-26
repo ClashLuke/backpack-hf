@@ -13,7 +13,7 @@ class ZeroPad2dDerivatives(BaseDerivatives):
         return True
 
     def ea_jac_t_mat_jac_prod(self, module, g_inp, g_out, mat):
-        _, C_out, H_out, W_out = module.output.shape
+        _, C_out, H_out, W_out = module.stored_backpack_output_9d617192.shape
         _, in_c, in_x, in_y = module.input0.shape
         in_features = in_c * in_x * in_y
 
@@ -43,7 +43,7 @@ class ZeroPad2dDerivatives(BaseDerivatives):
         return mat[:, :, :, W_top:W_bottom, H_bottom:H_top]
 
     def __unpad_indices(self, module):
-        _, _, H_out, W_out = module.output.shape
+        _, _, H_out, W_out = module.stored_backpack_output_9d617192.shape
         pad_left, pad_right, pad_top, pad_bottom = module.padding
 
         H_bottom, H_top = pad_left, W_out - pad_right

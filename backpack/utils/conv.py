@@ -84,7 +84,7 @@ def extract_weight_diagonal(module, unfolded_input, S, sum_batch=True):
         unfolded_input (torch.Tensor): Unfolded input to the convolution. Shape must
             follow the conventions of ``torch.nn.Unfold``.
         S (torch.Tensor): Backpropagated (symmetric factorization) of the loss Hessian.
-            Has shape ``(V, *module.output.shape)``.
+            Has shape ``(V, *module.stored_backpack_output_9d617192.shape)``.
         sum_batch (bool, optional): Sum out the batch dimension of the weight diagonals.
             Default value: ``True``.
 
@@ -117,7 +117,7 @@ def extract_bias_diagonal(module, S, sum_batch=True):
         module (torch.nn.Conv1d or torch.nn.Conv2d or torch.nn.Conv3d): Convolution
             layer for which the diagonal is extracted w.r.t. the bias.
         S (torch.Tensor): Backpropagated (symmetric factorization) of the loss Hessian.
-            Has shape ``(V, *module.output.shape)``.
+            Has shape ``(V, *module.stored_backpack_output_9d617192.shape)``.
         sum_batch (bool, optional): Sum out the batch dimension of the bias diagonals.
             Default value: ``True``.
 

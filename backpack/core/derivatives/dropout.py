@@ -29,7 +29,7 @@ class DropoutDerivatives(ElementwiseDerivatives):
         g_out: Tuple[Tensor],
         subsampling: List[int] = None,
     ) -> Tensor:  # noqa: D102
-        output = subsample(module.output, subsampling=subsampling)
+        output = subsample(module.stored_backpack_output_9d617192, subsampling=subsampling)
         if module.training:
             scaling = 1 / (1 - module.p)
             mask = 1 - eq(output, 0.0).to(output.dtype)

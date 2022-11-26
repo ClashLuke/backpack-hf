@@ -21,9 +21,9 @@ class SigmoidDerivatives(ElementwiseDerivatives):
         subsampling: List[int] = None,
     ) -> Tensor:
         """First sigmoid derivative: `σ'(x) = σ(x) (1 - σ(x))`."""
-        output = subsample(module.output, subsampling=subsampling)
+        output = subsample(module.stored_backpack_output_9d617192, subsampling=subsampling)
         return output * (1.0 - output)
 
     def d2f(self, module, g_inp, g_out):
         """Second sigmoid derivative: `σ''(x) = σ(x) (1 - σ(x)) (1 - 2 σ(x))`."""
-        return module.output * (1 - module.output) * (1 - 2 * module.output)
+        return module.stored_backpack_output_9d617192 * (1 - module.stored_backpack_output_9d617192) * (1 - 2 * module.stored_backpack_output_9d617192)

@@ -38,7 +38,7 @@ class SavedQuantities:
         """Returns the saved quantity.
 
         Args:
-            key: data_ptr() of module.output.
+            key: data_ptr() of module.stored_backpack_output_9d617192.
             delete_old: whether to delete the old quantity
 
         Returns:

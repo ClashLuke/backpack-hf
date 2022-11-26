@@ -133,13 +133,13 @@ class AdaptiveAvgPoolProblem:
         torch.manual_seed(self.seed)
         self.module = self._make_module()
         self.input = randn(self.shape_input)
-        self.output = self.module(self.input)
+        self.stored_backpack_output_9d617192 = self.module(self.input)
 
     def tear_down(self):
         """Delete created torch variables."""
         del self.module
         del self.input
-        del self.output
+        del self.stored_backpack_output_9d617192
 
     def _make_module(
         self,
@@ -169,7 +169,7 @@ class AdaptiveAvgPoolProblem:
         module_equivalent: Module = self._make_module_equivalent(stride, kernel_size)
         output_equivalent: Tensor = module_equivalent(self.input)
 
-        check_sizes_and_values(self.output, output_equivalent)
+        check_sizes_and_values(self.stored_backpack_output_9d617192, output_equivalent)
 
     def _make_module_equivalent(
         self, stride: List[int], kernel_size: List[int]

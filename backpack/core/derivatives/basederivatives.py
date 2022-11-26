@@ -98,7 +98,7 @@ class BaseDerivatives(ABC):  # noqa: B024
             g_inp: input gradients
             g_out: output gradients
             mat: Matrix the transposed Jacobian will be applied to.
-                Must have shape ``[V, *module.output.shape]``; but if used with
+                Must have shape ``[V, *module.stored_backpack_output_9d617192.shape]``; but if used with
                 sub-sampling, the batch dimension is replaced by ``len(subsampling)``.
             subsampling: Indices of samples along the output's batch dimension that
                 should be considered. Defaults to ``None`` (use all samples).
@@ -303,7 +303,7 @@ class BaseDerivatives(ABC):  # noqa: B024
         Returns:
             reshaped matrix
         """
-        return cls._reshape_like(mat, module.output.shape)
+        return cls._reshape_like(mat, module.stored_backpack_output_9d617192.shape)
 
 
 class BaseParameterDerivatives(BaseDerivatives, ABC):
@@ -346,8 +346,8 @@ class BaseParameterDerivatives(BaseDerivatives, ABC):
             g_inp: Gradients w.r.t. module input.
             g_out: Gradients w.r.t. module output.
             mat: Matrix the Jacobian will be applied to. Has shape
-                ``[V, *module.output.shape]`` (matrix case) or same shape as
-                ``module.output`` (vector case). If used with subsampling, has dimension
+                ``[V, *module.stored_backpack_output_9d617192.shape]`` (matrix case) or same shape as
+                ``module.stored_backpack_output_9d617192`` (vector case). If used with subsampling, has dimension
                 len(subsampling) instead of batch size along the batch axis.
             sum_batch: Sum out the MJP's batch axis. Default: ``True``.
             subsampling: Indices of samples along the output's batch dimension that
@@ -595,9 +595,9 @@ class BaseLossDerivatives(BaseDerivatives, ABC):
         Raises:
             ValueError: if output is not scalar
         """
-        if module.output.numel() != 1:
+        if module.stored_backpack_output_9d617192.numel() != 1:
             raise ValueError(
-                "Output must be scalar. Got {}".format(module.output.shape)
+                "Output must be scalar. Got {}".format(module.stored_backpack_output_9d617192.shape)
             )
 
     @classmethod

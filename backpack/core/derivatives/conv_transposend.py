@@ -42,10 +42,10 @@ class ConvTransposeNDDerivatives(BaseParameterDerivatives):
         # Expand batch dimension
         jac_mat = mat.unsqueeze(1)
         # Expand data dimensions
-        for i in range(3, len(module.output.shape) + 1):
+        for i in range(3, len(module.stored_backpack_output_9d617192.shape) + 1):
             jac_mat = jac_mat.unsqueeze(i)
 
-        expand_shape = [-1, module.output.shape[0], -1, *module.output.shape[2:]]
+        expand_shape = [-1, module.stored_backpack_output_9d617192.shape[0], -1, *module.stored_backpack_output_9d617192.shape[2:]]
 
         return jac_mat.expand(*expand_shape)
 
@@ -53,12 +53,12 @@ class ConvTransposeNDDerivatives(BaseParameterDerivatives):
         V = mat.shape[0]
         G = module.groups
         C_in = module.input0.shape[1]
-        N = module.output.shape[0]
-        C_out = module.output.shape[1]
+        N = module.stored_backpack_output_9d617192.shape[0]
+        C_out = module.stored_backpack_output_9d617192.shape[1]
 
         mat_reshape = mat.reshape(V, G, C_in // G, C_out // G, *module.weight.shape[2:])
         u = unfold_by_conv_transpose(module.input0, module).reshape(
-            N, G, C_in // G, *module.weight.shape[2:], *module.output.shape[2:]
+            N, G, C_in // G, *module.weight.shape[2:], *module.stored_backpack_output_9d617192.shape[2:]
         )
 
         dims_kern = "xyz"[: self.conv_dims]
@@ -80,14 +80,14 @@ class ConvTransposeNDDerivatives(BaseParameterDerivatives):
         V = mat.shape[0]
         G = module.groups
         C_in = module.input0.shape[1]
-        N = module.output.shape[0] if subsampling is None else len(subsampling)
-        C_out = module.output.shape[1]
+        N = module.stored_backpack_output_9d617192.shape[0] if subsampling is None else len(subsampling)
+        C_out = module.stored_backpack_output_9d617192.shape[1]
 
-        mat_reshape = mat.reshape(V, N, G, C_out // G, *module.output.shape[2:])
+        mat_reshape = mat.reshape(V, N, G, C_out // G, *module.stored_backpack_output_9d617192.shape[2:])
 
         u = unfold_by_conv_transpose(
             subsample(module.input0, subsampling=subsampling), module
-        ).reshape(N, G, C_in // G, *module.weight.shape[2:], *module.output.shape[2:])
+        ).reshape(N, G, C_in // G, *module.weight.shape[2:], *module.stored_backpack_output_9d617192.shape[2:])
 
         dims_kern = "xyz"[: self.conv_dims]
         dims_data = "abc"[: self.conv_dims]
@@ -102,12 +102,12 @@ class ConvTransposeNDDerivatives(BaseParameterDerivatives):
 
     def ea_jac_t_mat_jac_prod(self, module, g_inp, g_out, mat):
         in_features = int(prod(module.input0.size()[1:]))
-        out_features = int(prod(module.output.size()[1:]))
+        out_features = int(prod(module.stored_backpack_output_9d617192.size()[1:]))
 
-        mat = mat.reshape(out_features, *module.output.size()[1:])
+        mat = mat.reshape(out_features, *module.stored_backpack_output_9d617192.size()[1:])
         jac_t_mat = self.__jac_t(module, mat).reshape(out_features, in_features)
 
-        mat_t_jac = jac_t_mat.t().reshape(in_features, *module.output.size()[1:])
+        mat_t_jac = jac_t_mat.t().reshape(in_features, *module.stored_backpack_output_9d617192.size()[1:])
         jac_t_mat_t_jac = self.__jac_t(module, mat_t_jac)
         jac_t_mat_t_jac = jac_t_mat_t_jac.reshape(in_features, in_features)
 
@@ -119,7 +119,7 @@ class ConvTransposeNDDerivatives(BaseParameterDerivatives):
         return self.reshape_like_output(jmp_as_conv, module)
 
     def __jac(self, module, mat):
-        input_size = list(module.output.size())
+        input_size = list(module.stored_backpack_output_9d617192.size())
         input_size[0] = mat.size(0)
 
         grad_padding = _grad_input_padding(

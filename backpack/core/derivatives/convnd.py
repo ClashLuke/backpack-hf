@@ -97,10 +97,10 @@ class ConvNDDerivatives(BaseParameterDerivatives):
         # Expand batch dimension
         jac_mat = mat.unsqueeze(1)
         # Expand data dimensions
-        for i in range(3, len(module.output.shape) + 1):
+        for i in range(3, len(module.stored_backpack_output_9d617192.shape) + 1):
             jac_mat = jac_mat.unsqueeze(i)
 
-        expand_shape = [-1, module.output.shape[0], -1, *module.output.shape[2:]]
+        expand_shape = [-1, module.stored_backpack_output_9d617192.shape[0], -1, *module.stored_backpack_output_9d617192.shape[2:]]
 
         return jac_mat.expand(*expand_shape)
 
@@ -154,8 +154,8 @@ class ConvNDDerivatives(BaseParameterDerivatives):
         """Uses convolution of same order."""
         G = module.groups
         V = mat.shape[0]
-        C_out = module.output.shape[1]
-        N = module.output.shape[0] if subsampling is None else len(subsampling)
+        C_out = module.stored_backpack_output_9d617192.shape[1]
+        N = module.stored_backpack_output_9d617192.shape[0] if subsampling is None else len(subsampling)
         C_in = module.input0.shape[1]
         C_in_axis = 1
         N_axis = 0
@@ -211,8 +211,8 @@ class ConvNDDerivatives(BaseParameterDerivatives):
         """
         G = module.groups
         V = mat.shape[0]
-        C_out = module.output.shape[1]
-        N = module.output.shape[0] if subsampling is None else len(subsampling)
+        C_out = module.stored_backpack_output_9d617192.shape[1]
+        N = module.stored_backpack_output_9d617192.shape[0] if subsampling is None else len(subsampling)
         C_in = module.input0.shape[1]
 
         higher_conv_func = get_conv_function(self.conv_dims + 1)
@@ -260,12 +260,12 @@ class ConvNDDerivatives(BaseParameterDerivatives):
 
     def ea_jac_t_mat_jac_prod(self, module, g_inp, g_out, mat):
         in_features = int(prod(module.input0.size()[1:]))
-        out_features = int(prod(module.output.size()[1:]))
+        out_features = int(prod(module.stored_backpack_output_9d617192.size()[1:]))
 
-        mat = mat.reshape(out_features, *module.output.size()[1:])
+        mat = mat.reshape(out_features, *module.stored_backpack_output_9d617192.size()[1:])
         jac_t_mat = self.__jac_t(module, mat).reshape(out_features, in_features)
 
-        mat_t_jac = jac_t_mat.t().reshape(in_features, *module.output.size()[1:])
+        mat_t_jac = jac_t_mat.t().reshape(in_features, *module.stored_backpack_output_9d617192.size()[1:])
         jac_t_mat_t_jac = self.__jac_t(module, mat_t_jac)
         jac_t_mat_t_jac = jac_t_mat_t_jac.reshape(in_features, in_features)
 

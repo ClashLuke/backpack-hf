@@ -86,7 +86,7 @@ class LSTMDerivatives(BaseParameterDerivatives):
         c_tanh: Tensor = zeros(N, T, H, device=mat.device, dtype=mat.dtype)
 
         input0 = subsample(module.input0, dim=0, subsampling=subsampling)
-        output = subsample(module.output, dim=0, subsampling=subsampling)
+        output = subsample(module.stored_backpack_output_9d617192, dim=0, subsampling=subsampling)
 
         for t in range(T):
             ifgo[:, t] = (
@@ -319,7 +319,7 @@ class LSTMDerivatives(BaseParameterDerivatives):
             module, mat, subsampling=subsampling
         )
 
-        subsampled_output = subsample(module.output, dim=0, subsampling=subsampling)
+        subsampled_output = subsample(module.stored_backpack_output_9d617192, dim=0, subsampling=subsampling)
         single_step = zeros(N, 1, H, device=mat.device, dtype=mat.dtype)
         return einsum(
             f"vnth,ntg->v{'' if sum_batch else 'n'}hg",

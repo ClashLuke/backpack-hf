@@ -74,7 +74,7 @@ class HBPConv2d(HBPBaseModule):
         return [self._factor_from_batch_average(module, backproped)]
 
     def _factor_from_batch_average(self, module, backproped):
-        _, out_c, out_x, out_y = module.output.size()
+        _, out_c, out_x, out_y = module.stored_backpack_output_9d617192.size()
         out_pixels = out_x * out_y
         # sum over spatial coordinates
         result = backproped.view(out_c, out_pixels, out_c, out_pixels).sum([1, 3])

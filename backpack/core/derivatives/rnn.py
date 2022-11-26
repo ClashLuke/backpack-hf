@@ -71,7 +71,7 @@ class RNNDerivatives(BaseParameterDerivatives):
             jacobian vector product wrt a
         """
         V, N, T, H = mat.shape
-        output = subsample(module.output, dim=0, subsampling=subsampling)
+        output = subsample(module.stored_backpack_output_9d617192, dim=0, subsampling=subsampling)
         a_jac_t_mat_prod: Tensor = zeros(V, N, T, H, device=mat.device, dtype=mat.dtype)
         for t in reversed(range(T)):
             if t == (T - 1):
@@ -122,14 +122,14 @@ class RNNDerivatives(BaseParameterDerivatives):
             if t == 0:
                 _jac_mat_prod[:, :, t] = einsum(
                     "nh,hi,vni->vnh",
-                    1 - module.output[:, t] ** 2,
+                    1 - module.stored_backpack_output_9d617192[:, t] ** 2,
                     module.weight_ih_l0,
                     mat[:, :, t],
                 )
             else:
                 _jac_mat_prod[:, :, t] = einsum(
                     "nh,vnh->vnh",
-                    1 - module.output[:, t] ** 2,
+                    1 - module.stored_backpack_output_9d617192[:, t] ** 2,
                     einsum(
                         "hi,vni->vnh",
                         module.weight_ih_l0,
@@ -256,7 +256,7 @@ class RNNDerivatives(BaseParameterDerivatives):
         """
         self._check_parameters(module)
         _, N, _, H = mat.shape
-        output = subsample(module.output, dim=0, subsampling=subsampling)
+        output = subsample(module.stored_backpack_output_9d617192, dim=0, subsampling=subsampling)
         single_step = zeros(N, 1, H, device=mat.device, dtype=mat.dtype)
         output_shifted = cat([single_step, output[:, :-1]], dim=1)
         return einsum(

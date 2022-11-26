@@ -37,7 +37,7 @@ class AdaptiveAvgPoolNDDerivatives(AvgPoolNDDerivatives):
             )
 
         shape_input: Size = module.input0.shape
-        shape_output: Size = module.output.shape
+        shape_output: Size = module.stored_backpack_output_9d617192.shape
 
         # check length of input shape
         if not len(shape_input) == (self.N + 2):
@@ -67,7 +67,7 @@ class AdaptiveAvgPoolNDDerivatives(AvgPoolNDDerivatives):
             stride, kernel_size, padding as lists of length self.N
         """
         shape_input: Size = module.input0.shape
-        shape_target: Size = module.output.shape
+        shape_target: Size = module.stored_backpack_output_9d617192.shape
 
         # calculate equivalent AvgPoolND parameters
         stride: List[int] = []
